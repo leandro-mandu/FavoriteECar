@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:text="@string/title"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:text="@string/cars"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:layout_margin="16dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+    <TextView
+        android:id="@+id/tab_favorites"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:text="@string/favorites"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_margin="16dp"
+        android:textAlignment="textStart"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_car_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tab_favorites"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:cardBackgroundColor="@color/card_bg"
+        android:layout_margin="16dp">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/cv_car_content"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/img_car"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/e_car"
+        />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/img_car"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:text="@string/price"/>
+    <TextView
+        android:id="@+id/tv_bat"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_price"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:text="@string/bat"/>
+    <TextView
+        android:id="@+id/tv_horsepower"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_bat"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:text="@string/horsepower"/>
+    <TextView
+        android:id="@+id/tv_charge"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_horsepower"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:text="@string/charge"/>
+
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/tv_price_value"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/img_car"
+        app:layout_constraintStart_toEndOf="@id/tv_price"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:text="R$ 120.000,00"/>
+    <TextView
+        android:id="@+id/tv_bat_value"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_price"
+        app:layout_constraintStart_toEndOf="@id/tv_price"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:text="93,4 kWh"/>
+    <TextView
+        android:id="@+id/tv_horsepower_value"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_bat"
+        app:layout_constraintStart_toEndOf="@id/tv_price"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:text="646 cv"/>
+    <TextView
+        android:id="@+id/tv_charge_value"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_horsepower"
+        app:layout_constraintStart_toEndOf="@id/tv_price"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:text="23 min"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+    <Button
+        android:id="@+id/bt_navegar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        android:text="Calcular"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

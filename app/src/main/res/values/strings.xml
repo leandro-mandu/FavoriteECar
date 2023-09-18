@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">FavoriteECar</string>
+    <string name="title">Carro Elétrico Favorito</string>
+    <string name="cars">Carros</string>
+    <string name="favorites">Favoritos</string>
+    <string name="price">Preço</string>
+    <string name="bat">Bateria</string>
+    <string name="horsepower">Potência</string>
+    <string name="charge">Recarga</string>
+    <string-array name="states">
+        <item>RJ</item>
+        <item>SP</item>
+        <item>PR</item>
+        <item>DF</item>
+        <item>AM</item>
+        <item>PI</item>
+        <item>SC</item>
+    </string-array>
+</resources>
