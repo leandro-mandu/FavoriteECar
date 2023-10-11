@@ -7,13 +7,14 @@ import android.view.View
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.leandromandu.favoriteecar.adapter.CarAdapter
 import com.leandromandu.favoriteecar.adapter.TabAdapter
 import com.leandromandu.favoriteecar.data.CarroFactory
 
 class MainActivity : AppCompatActivity() {
-    lateinit var btn_navegar : Button
+    lateinit var fab_navegar : FloatingActionButton
     //lateinit var car_list : RecyclerView
     lateinit var tab_car : TabLayout
     lateinit var viewPager2 : ViewPager2
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setupView(){
-        btn_navegar=findViewById(R.id.bt_navegar)
+        fab_navegar=findViewById(R.id.fab_navegar)
         //car_list=findViewById(R.id.rv_car_list)
         tab_car=findViewById(R.id.tab_carros)
         viewPager2=findViewById(R.id.vp_view_pager)
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setupListeners(){
-        btn_navegar.setOnClickListener {
+        fab_navegar.setOnClickListener {
             startActivity(Intent(this,CalcularActivity::class.java))
         }
         tab_car.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

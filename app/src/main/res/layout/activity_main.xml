@@ -42,20 +42,15 @@
         />
 
 
-
-
-
-
-
-
-
-    <Button
-        android:id="@+id/bt_navegar"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_navegar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_calculate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
-        android:text="Calcular"
+
         />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
