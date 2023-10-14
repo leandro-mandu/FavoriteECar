@@ -5,7 +5,7 @@ data class Carro(
     val preco : String,
     val bateria : String,
     val potencia : String,
-    val img_url : String,
+    val urlPhoto : String,
     val recarga : String,
 
 ) {
