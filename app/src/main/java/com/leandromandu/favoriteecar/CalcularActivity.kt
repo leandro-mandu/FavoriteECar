@@ -1,5 +1,6 @@
 package com.leandromandu.favoriteecar
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -37,6 +38,12 @@ class CalcularActivity: AppCompatActivity() {
         sp_his=findViewById(R.id.sp_history)
 
         sp_his.adapter=ArrayAdapter(this, android.R.layout.simple_list_item_1, historico)
+        var last = getLastResult()
+        if(last!=0.0f) {
+            result.visibility= View.VISIBLE;
+            result.text="Último: "+last
+        }
+
     }
 
     fun setupListeners(){
@@ -51,10 +58,27 @@ class CalcularActivity: AppCompatActivity() {
             result.visibility= View.VISIBLE;
 
             historico.add(res.toString())
+            saveLastResult(res)
         }
         btn_voltar.setOnClickListener {
             //startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
+    }
+
+    fun saveLastResult(result:Float){
+//        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+//        sharedPref.edit().putFloat(getString(R.string.key_last_result), result)
+//        sharedPref.edit().apply()
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        with(sharedPref.edit()){
+            putFloat(getString(R.string.key_last_result), result)
+            apply()
+        }
+    }
+
+    fun getLastResult():Float{
+        val sharedPref=getPreferences(Context.MODE_PRIVATE)
+        return sharedPref.getFloat(getString(R.string.key_last_result), 0.0f)
     }
 }

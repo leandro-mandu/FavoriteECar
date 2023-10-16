@@ -10,7 +10,9 @@ import android.util.Base64InputStream
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -42,6 +44,7 @@ class CarFragment : Fragment(){
     lateinit var pb_progress : ProgressBar
     lateinit var iv_no_connection:ImageView
     lateinit var carsApi : CarsApi
+    lateinit var bt_tentar_novamente : Button
     var listaCarros : ArrayList<Carro> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,18 +61,61 @@ class CarFragment : Fragment(){
 
         setupRetrofit()
         setupView(view)
+        setupListeners()
 
         if( checkInternet(context)){
             //metodo asynctask http
             //GetCarInformations().execute("https://igorbag.github.io/cars-api/cars.json")
 
             //metodo retrofit
+
             getAllCars()
         }
         else{
-            iv_no_connection.visibility=View.VISIBLE
+            stateNoConnection()
         }
     }
+
+    fun setupListeners(){
+        bt_tentar_novamente.setOnClickListener{
+
+            if( checkInternet(context)){
+                getAllCars()
+            }
+            else{
+                stateNoConnection()
+            }
+        }
+    }
+
+    fun stateNoConnection(){
+        iv_no_connection.visibility=View.VISIBLE
+        bt_tentar_novamente.visibility=View.VISIBLE
+        car_list.visibility=View.GONE
+        pb_progress.visibility=View.GONE
+    }
+
+    fun stateLoading(){
+        pb_progress.visibility=View.VISIBLE
+        iv_no_connection.visibility=View.GONE
+        bt_tentar_novamente.visibility=View.GONE
+        car_list.visibility=View.GONE
+    }
+
+
+
+    fun stateSuccess(){
+        car_list.visibility=View.VISIBLE
+        pb_progress.visibility=View.GONE
+        iv_no_connection.visibility=View.GONE
+        bt_tentar_novamente.visibility=View.GONE
+    }
+
+    fun stateError(){
+        Toast.makeText(context, R.string.response_error, Toast.LENGTH_LONG).show()
+        stateNoConnection()
+    }
+
 
     fun setupRetrofit(){
         val retrofit = Retrofit.Builder()
@@ -81,32 +127,30 @@ class CarFragment : Fragment(){
     }
 
     fun getAllCars(){
+        stateLoading()
         carsApi.getAllCars().enqueue(object : Callback<List<Carro>>{
             override fun onResponse(call: Call<List<Carro>>, response: Response<List<Carro>>) {
                 Log.e("retrofit","onResponse")
                 if(response.isSuccessful){
-
-                    car_list.visibility=View.VISIBLE
-                    pb_progress.visibility=View.GONE
-                    iv_no_connection.visibility=View.GONE
                     response.body()?.let {
                         setupList(it)
                     }
+                    stateSuccess()
                 }else{
-                    Toast.makeText(context, R.string.response_error, Toast.LENGTH_LONG).show()
-
+                    stateError()
                 }
             }
 
             override fun onFailure(call: Call<List<Carro>>, t: Throwable) {
                 Log.e("retrofit","onFailure")
-                Toast.makeText(context, R.string.response_error, Toast.LENGTH_LONG).show()
+                stateError()
             }
 
         })
     }
 
     fun setupView(view:View){
+        bt_tentar_novamente = view.findViewById(R.id.bt_tentar_novamente)
         pb_progress = view.findViewById(R.id.pb_progressBar)
         iv_no_connection=view.findViewById(R.id.iv_no_connection)
         //val dados = CarroFactory.lista
@@ -119,7 +163,9 @@ class CarFragment : Fragment(){
     fun setupList(lista: List<Carro>){
         val adapter = CarAdapter( lista)
         car_list.adapter=adapter
-
+        adapter.carItemListener={
+            Log.e("selecionado","id:"+it.id)
+        }
     }
 
     fun checkInternet(context:Context?):Boolean{
@@ -140,13 +186,16 @@ else -> false
             return networkInfo.isConnected;
         }
     }
+
+
+    //deprecated - only for example, use retrofit
     inner class GetCarInformations : AsyncTask<String, String, String>(){
         override fun onPreExecute() {
             super.onPreExecute()
         }
 
         override fun doInBackground(vararg url: String?): String {
-            pb_progress.visibility=View.VISIBLE
+            stateLoading()
             var urlConnection: HttpURLConnection?=null
             try {
                 val urlBase =   URL(url[0])
@@ -208,7 +257,8 @@ else -> false
                             bateria = jsonArray.getJSONObject(i).getString("bateria"),
                             potencia = jsonArray.getJSONObject(i).getString("potencia"),
                             recarga = jsonArray.getJSONObject(i).getString("recarga"),
-                            urlPhoto = jsonArray.getJSONObject(i).getString("urlPhoto")
+                            urlPhoto = jsonArray.getJSONObject(i).getString("urlPhoto"),
+                            isFavorite = false
                         )
 
                         listaCarros.add(carro)

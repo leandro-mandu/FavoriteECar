@@ -8,6 +8,8 @@
     <string name="horsepower">Potência</string>
     <string name="charge">Recarga</string>
     <string name="response_error">Erro ao carrergar informações!</string>
+    <string name="key_last_result">lastResult</string>
+    <string name="tentar_novamente">Tentar novamente</string>
     <string-array name="states">
         <item>RJ</item>
         <item>SP</item>

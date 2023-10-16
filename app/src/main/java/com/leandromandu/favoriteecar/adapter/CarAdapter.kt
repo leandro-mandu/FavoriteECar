@@ -28,7 +28,7 @@ import java.net.URL
  */
 
 class CarAdapter(private val carros : List<Carro>) : RecyclerView.Adapter<CarAdapter.ViewHolder>() {
-
+    var carItemListener : (Carro)->Unit={}
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_car, parent, false)
         Log.d("adapter", "onCreate")
@@ -41,6 +41,13 @@ class CarAdapter(private val carros : List<Carro>) : RecyclerView.Adapter<CarAda
         holder.bateria.text=carros[position].bateria
         holder.potencia.text=carros[position].potencia
         holder.recarga.text=carros[position].recarga
+        holder.favorito.setOnClickListener{
+            var carro = carros[position]
+            carro.isFavorite=!carro.isFavorite
+            carItemListener(carros[position])
+            if(carro.isFavorite) holder.favorito.setImageResource(R.drawable.star_on)
+            else holder.favorito.setImageResource(R.drawable.star_off)
+        }
 //        val newurl = Uri.(carros[position].img_url)
 //        //val img = BitmapFactory.decodeStream(newurl.openConnection().getInputStream());
 //        holder.imagemUrl.setImageURI(newurl)
@@ -60,12 +67,14 @@ class CarAdapter(private val carros : List<Carro>) : RecyclerView.Adapter<CarAda
         val potencia : TextView
         val imagemUrl : ImageView
         val recarga : TextView
+        val favorito : ImageView
         init {
             preco=view.findViewById(R.id.tv_price_value)
             bateria=view.findViewById(R.id.tv_bat_value)
             potencia=view.findViewById(R.id.tv_horsepower_value)
             imagemUrl=view.findViewById(R.id.img_car)
             recarga=view.findViewById(R.id.tv_charge_value)
+            favorito=view.findViewById(R.id.iv_favorite)
             Log.d("adapter", "init")
         }
     }
