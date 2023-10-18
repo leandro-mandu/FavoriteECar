@@ -22,6 +22,7 @@ import com.leandromandu.favoriteecar.R
 import com.leandromandu.favoriteecar.adapter.CarAdapter
 import com.leandromandu.favoriteecar.data.CarroFactory
 import com.leandromandu.favoriteecar.data.CarsApi
+import com.leandromandu.favoriteecar.data.local.CarRepository
 import com.leandromandu.favoriteecar.dominio.Carro
 import org.json.JSONArray
 import org.json.JSONObject
@@ -63,6 +64,11 @@ class CarFragment : Fragment(){
         setupView(view)
         setupListeners()
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         if( checkInternet(context)){
             //metodo asynctask http
             //GetCarInformations().execute("https://igorbag.github.io/cars-api/cars.json")
@@ -160,11 +166,24 @@ class CarFragment : Fragment(){
     //    car_list.adapter=adapter
     }
 
-    fun setupList(lista: List<Carro>){
-        val adapter = CarAdapter( lista)
+    fun setupList(listaApi: List<Carro>){
+//        var listaFavoritos = CarRepository(requireContext()).getAll()
+        for (i in 0 until listaApi.size){
+            if (CarRepository(requireContext()).findById(listaApi[i].id) != null)
+                listaApi[i].isFavorite=true
+        }
+        val adapter = CarAdapter( listaApi)
         car_list.adapter=adapter
         adapter.carItemListener={
-            Log.e("selecionado","id:"+it.id)
+
+            if (CarRepository(requireContext()).findById(it.id) == null) {
+                CarRepository(requireContext()).save(it)
+                Toast.makeText(context, "Carro ${it.id} adicionado aos favoritos! :)", Toast.LENGTH_LONG).show()
+            }
+            else {
+                CarRepository(requireContext()).deleteById(it.id)
+                Toast.makeText(context, "Carro ${it.id} removido dos favoritos! :(", Toast.LENGTH_LONG).show()
+            }
         }
     }
 

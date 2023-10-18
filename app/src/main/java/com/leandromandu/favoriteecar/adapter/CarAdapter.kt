@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.leandromandu.favoriteecar.R
+import com.leandromandu.favoriteecar.data.local.CarRepository
 import com.leandromandu.favoriteecar.dominio.Carro
 import java.net.URI
 import java.net.URL
@@ -41,12 +42,20 @@ class CarAdapter(private val carros : List<Carro>) : RecyclerView.Adapter<CarAda
         holder.bateria.text=carros[position].bateria
         holder.potencia.text=carros[position].potencia
         holder.recarga.text=carros[position].recarga
+
+        if(carros[position].isFavorite)
+            holder.favorito.setImageResource(R.drawable.star_on)
+        else
+            holder.favorito.setImageResource(R.drawable.star_off)
+
         holder.favorito.setOnClickListener{
             var carro = carros[position]
             carro.isFavorite=!carro.isFavorite
             carItemListener(carros[position])
-            if(carro.isFavorite) holder.favorito.setImageResource(R.drawable.star_on)
-            else holder.favorito.setImageResource(R.drawable.star_off)
+            if(carro.isFavorite)
+                holder.favorito.setImageResource(R.drawable.star_on)
+            else
+                holder.favorito.setImageResource(R.drawable.star_off)
         }
 //        val newurl = Uri.(carros[position].img_url)
 //        //val img = BitmapFactory.decodeStream(newurl.openConnection().getInputStream());
